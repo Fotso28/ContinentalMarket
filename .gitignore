@@ -14,3 +14,7 @@ apps/web/output/
 # Système
 .DS_Store
 Thumbs.db
+
+# Moteur Impeccable téléchargé à la volée (17 Mo, régénérable)
+.agents/skills/impeccable/scripts/bin/
+.claude/skills/impeccable/scripts/bin/
