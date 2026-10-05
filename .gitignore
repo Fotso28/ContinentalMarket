@@ -1,0 +1,16 @@
+# Dépendances et builds
+node_modules/
+.next/
+*.tsbuildinfo
+next-env.d.ts
+
+# Journaux
+*.log
+
+# Captures et sessions Playwright : volumineuses et régénérables
+apps/web/output/
+.playwright-cli/
+
+# Système
+.DS_Store
+Thumbs.db
