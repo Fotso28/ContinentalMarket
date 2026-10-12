@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 
 const moments = [
   { sales: "186 500", orders: 28, active: 7, bars: [42, 58, 48, 74, 63, 86, 71] },
@@ -21,8 +21,8 @@ export function SoftwareDemo() {
   const data = moments[moment];
 
   return (
-    <div className="software-device" aria-label="Simulation animée d’une application de gestion de bar">
-      <div className="software-camera" aria-hidden="true" />
+    <div className="software-device" role="img" aria-label="Simulation animée d’une application de gestion de bar">
+      <div className="software-camera" />
       <div className="software-screen">
         <aside className="software-sidebar">
           <strong>Continental</strong>
@@ -37,21 +37,21 @@ export function SoftwareDemo() {
             <span className="software-live"><i /> En direct</span>
           </div>
           <div className="software-stats">
-            <article><small>Ventes du jour</small><strong>{data.sales} FCFA</strong><span>Activité en progression</span></article>
+            <article><small>Ventes du jour</small><strong>{data.sales} <em>FCFA</em></strong><span>Activité en progression</span></article>
             <article><small>Commandes</small><strong>{data.orders}</strong><span>{data.active} en préparation</span></article>
             <article><small>Alertes stock</small><strong>03</strong><span>À vérifier</span></article>
           </div>
           <div className="software-panels">
             <article className="software-chart">
               <div><strong>Activité du service</strong><small>Mise à jour automatique</small></div>
-              <div className="software-bars" aria-hidden="true">
-                {data.bars.map((height, index) => <i style={{ height: `${height}%` }} key={index} />)}
+              <div className="software-bars">
+                {data.bars.map((height, index) => <i style={{ "--h": height / 100 } as CSSProperties} key={index} />)}
               </div>
             </article>
             <article className="software-orders">
               <strong>Commandes récentes</strong>
               <p><span>Table 08</span><b>Servie</b></p>
-              <p><span>Comptoir 03</span><b>En cours</b></p>
+              <p><span>Comptoir 03</span><b className="is-pending">En cours</b></p>
               <p><span>Table 12</span><b>Validée</b></p>
             </article>
           </div>

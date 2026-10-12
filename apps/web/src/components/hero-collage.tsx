@@ -1,56 +1,64 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 
-import groupLeadership from "../../public/images/landing/group-leadership.png";
+import groupOffice from "../../public/images/landing/persona-group-office.png";
 import marketManager from "../../public/images/landing/market-manager.png";
-import energyEngineer from "../../public/images/landing/energy-engineer.png";
-import softwareArchitect from "../../public/images/landing/software-architect.png";
+import energyKit from "../../public/images/landing/persona-energy-kit.png";
+import softwareDesk from "../../public/images/landing/persona-software-desk.png";
 import pressingSpecialist from "../../public/images/landing/pressing-specialist.png";
 
 type Portrait = { src: StaticImageData; alt: string };
 
 const portraits: Record<string, Portrait> = {
-  group: { src: groupLeadership, alt: "Direction Continental Group" },
+  group: { src: groupOffice, alt: "Homme assis à son bureau" },
   market: { src: marketManager, alt: "Responsable Continental Market" },
-  energy: { src: energyEngineer, alt: "Expert Continental Energy" },
-  software: { src: softwareArchitect, alt: "Expert Continental Software" },
+  energy: { src: energyKit, alt: "Homme auprès d’un équipement énergétique" },
+  software: { src: softwareDesk, alt: "Homme travaillant sur un ordinateur" },
   pressing: { src: pressingSpecialist, alt: "Experte Continental Pressing" },
 };
 
 const slots = [
-  { className: "collage-market", sizes: "(max-width: 767px) 52vw, 18vw", sequence: ["market", "software", "pressing"] },
-  { className: "collage-leader", sizes: "(max-width: 767px) 68vw, 27vw", sequence: ["group", "market", "energy"] },
-  { className: "collage-energy", sizes: "(max-width: 767px) 46vw, 19vw", sequence: ["energy", "pressing", "group"] },
-  { className: "collage-pressing", sizes: "(max-width: 767px) 44vw, 17vw", sequence: ["pressing", "energy", "software"] },
+  { className: "collage-market", sizes: "(max-width: 767px) 46vw, 18vw", sequence: ["market", "software", "pressing"] },
+  { className: "collage-leader", sizes: "(max-width: 767px) 54vw, 22vw", sequence: ["group", "market", "energy"] },
+  { className: "collage-energy", sizes: "(max-width: 767px) 44vw, 20vw", sequence: ["energy", "pressing", "group"] },
+  { className: "collage-pressing", sizes: "(max-width: 767px) 36vw, 16vw", sequence: ["pressing", "energy", "software"] },
 ];
+
+const scenes = [0, 1, 2];
 
 export function HeroCollage() {
   const [scene, setScene] = useState(0);
-  const [paused, setPaused] = useState(false);
+  // Les compositions 2 et 3 ne sont montées qu'une fois la page chargée :
+  // le premier affichage ne télécharge que les quatre portraits visibles.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (paused || reducedMotion.matches) return;
-
-    const timer = window.setInterval(() => {
-      setScene((current) => (current + 1) % 3);
-    }, 4800);
-
-    return () => window.clearInterval(timer);
-  }, [paused]);
+    const enable = () => setReady(true);
+    if (document.readyState === "complete") {
+      const frame = window.requestAnimationFrame(enable);
+      return () => window.cancelAnimationFrame(frame);
+    }
+    window.addEventListener("load", enable, { once: true });
+    return () => window.removeEventListener("load", enable);
+  }, []);
 
   return (
     <div
       className="hero-collage"
+      role="group"
       aria-label="Les professionnels Continental Group"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      data-ready={ready ? "" : undefined}
     >
       {slots.map((slot, slotIndex) => (
-        <div className={`collage-image ${slot.className}`} key={slot.className}>
+        <div
+          className={`collage-image ${slot.className}`}
+          style={{ "--i": slotIndex } as CSSProperties}
+          key={slot.className}
+        >
           {slot.sequence.map((portraitKey, imageIndex) => {
+            if (imageIndex > 0 && !ready) return null;
             const portrait = portraits[portraitKey];
             return (
               <Image
@@ -58,17 +66,30 @@ export function HeroCollage() {
                 src={portrait.src}
                 alt={scene === imageIndex ? portrait.alt : ""}
                 fill
-                fetchPriority={slotIndex === 1 && imageIndex === 0 ? "high" : "auto"}
-                sizes={slot.sizes}
+                preload={slotIndex === 1 && imageIndex === 0}
+                sizes={portraitKey === "group" ? "(max-width: 767px) 140vw, 70vw" : slot.sizes}
+                quality={90}
                 key={portraitKey}
               />
             );
           })}
         </div>
       ))}
-      <div className="collage-progress" aria-hidden="true">
-        {[0, 1, 2].map((item) => (
-          <span className={scene === item ? "is-active" : ""} key={item} />
+      <div className="collage-progress">
+        {scenes.map((item) => (
+          <button
+            type="button"
+            className={scene === item ? "is-active" : ""}
+            aria-label={`Afficher la composition ${item + 1} sur ${scenes.length}`}
+            aria-pressed={scene === item}
+            onClick={() => setScene(item)}
+            key={item}
+          >
+            {/* La barre active se remplit en CSS ; sa fin déclenche la composition suivante. */}
+            <span>
+              {scene === item && <i onAnimationEnd={() => setScene((item + 1) % scenes.length)} />}
+            </span>
+          </button>
         ))}
       </div>
     </div>
