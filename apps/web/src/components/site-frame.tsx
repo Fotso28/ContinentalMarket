@@ -1,14 +1,18 @@
 import { MapPin, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { TabBar } from "@/components/commerce/tab-bar";
+import { getCategories } from "@/lib/catalog/queries";
 import { whatsappDisplay, whatsappLink } from "@/lib/contact";
 
 const defaultMessage = "Bonjour Continental Group, je souhaite échanger avec votre équipe.";
 
-/** Cadre unique du site : bandeau, en-tête, contenu, barre mobile et pied de page. */
+/** Cadre de la vitrine du groupe : bandeau, en-tête, contenu et pied de page. */
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const whatsappUrl = whatsappLink(defaultMessage);
+  const categories = {
+    market: getCategories("market").map(({ slug, name }) => ({ slug, name })),
+    energy: getCategories("energy").map(({ slug, name }) => ({ slug, name })),
+  };
 
   return (
     <div className="page-shell">
@@ -21,11 +25,10 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
         </a>
       </div>
 
-      <SiteHeader whatsappUrl={whatsappUrl} />
+      <SiteHeader whatsappUrl={whatsappUrl} categories={categories} />
 
       <main id="contenu">{children}</main>
 
-      <TabBar />
       <SiteFooter />
     </div>
   );

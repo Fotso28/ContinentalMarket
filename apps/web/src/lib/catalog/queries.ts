@@ -1,7 +1,8 @@
 import { attributeDefs, attributeGroupOrder, attributeGroupTitles } from "./attributes";
 import { categories, products } from "./data";
-import { formatAttribute } from "./format";
+import { formatAttribute, formatPrice } from "./format";
 import type { Category, Division, Product, SpecGroup } from "./types";
+import type { CardData } from "./view";
 
 export function getCategories(division: Division): Category[] {
   return categories.filter((c) => c.division === division);
@@ -50,4 +51,38 @@ export function getKeyFacts(product: Product): { label: string; value: string }[
     .map((key) => attributeDefs.find((d) => d.key === key))
     .filter((d): d is NonNullable<typeof d> => d !== undefined && product.attributes[d.key] !== undefined)
     .map((d) => ({ label: d.label, value: formatAttribute(d, product.attributes[d.key]) }));
+}
+
+const divisionLabels: Record<Division, string> = { market: "Market", energy: "Energy" };
+
+export function toCard(product: Product): CardData {
+  const tier = [...(product.tiers ?? [])].sort((a, b) => a.minQty - b.minQty)[0];
+  const capacity = product.attributes.capacite_kwh;
+  return {
+    slug: product.slug,
+    href: `/${product.division}/product/${product.slug}`,
+    name: product.name,
+    brand: product.brand,
+    image: product.images[0],
+    division: product.division,
+    divisionLabel: divisionLabels[product.division],
+    facts: product.division === "energy" ? getKeyFacts(product).map((fact) => fact.value) : [],
+    price: product.price,
+    tierHint: tier ? `dès ${tier.minQty} : ${formatPrice(tier.unitPrice)}` : undefined,
+    inStock: product.availability === "in_stock",
+    capacityKwh: typeof capacity === "number" ? capacity : undefined,
+  };
+}
+
+const fold = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+/** Recherche simple : tous les mots saisis doivent apparaître dans le nom, la marque, le résumé ou la catégorie. */
+export function searchProducts(query: string): Product[] {
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+  return products.filter((product) => {
+    const category = categories.find((c) => c.division === product.division && c.slug === product.categorySlug);
+    const haystack = fold([product.name, product.brand, product.summary, category?.name, String(product.attributes.reference ?? "")].join(" "));
+    return words.every((word) => haystack.includes(word));
+  });
 }

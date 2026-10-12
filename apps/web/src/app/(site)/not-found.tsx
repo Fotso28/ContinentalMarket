@@ -3,7 +3,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export default function NotFound() {
   return (
-    <section className="catalog-intro not-found" aria-labelledby="not-found-title">
+    <section className="shop-page not-found" aria-labelledby="not-found-title">
       <p className="not-found-code">Erreur 404</p>
       <h1 id="not-found-title">Cette page n’existe pas, ou plus.</h1>
       <p>Le lien est peut-être ancien. Vous pouvez repartir de l’accueil ou aller directement vers une boutique.</p>

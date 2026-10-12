@@ -1,42 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { formatPrice, startingPrice } from "@/lib/catalog/format";
-import { getKeyFacts } from "@/lib/catalog/queries";
-import type { Product } from "@/lib/catalog/types";
+import { formatPrice } from "@/lib/catalog/format";
+import type { CardData } from "@/lib/catalog/view";
 
-/** Carte produit : marché affiche le prix à partir de, énergie affiche ses chiffres clés et « Sur devis ». */
-export function ProductCard({ product }: { product: Product }) {
-  const href = `/${product.division}/product/${product.slug}`;
-  const from = startingPrice(product);
-  const facts = product.division === "energy" ? getKeyFacts(product) : [];
+/** Carte produit : image, nom, prix lisible d'un coup d'œil, disponibilité. Toute la carte est le lien. */
+export function ProductCard({ product, showDivision = false }: { product: CardData; showDivision?: boolean }) {
+  const quote = product.price === undefined;
 
   return (
     <article className="product-card">
-      <Link href={href} className="product-card-media" aria-label={product.name}>
-        <Image src={product.images[0]} alt="" fill sizes="(max-width: 767px) 48vw, (max-width: 1050px) 30vw, 22vw" />
+      <Link href={product.href} className="product-card-media" aria-hidden tabIndex={-1}>
+        <Image src={product.image} alt="" fill sizes="(max-width: 767px) 48vw, (max-width: 1050px) 30vw, 22vw" />
+        {!product.inStock && <span className="card-badge">Sur commande</span>}
       </Link>
       <div className="product-card-body">
-        <div className="product-card-text">
-          <h3><Link href={href}>{product.name}</Link></h3>
-          {product.brand && <p className="product-card-brand">{product.brand}</p>}
-          {facts.length > 0 && (
-            <ul className="fact-chips">
-              {facts.map((fact) => <li key={fact.label}>{fact.value}</li>)}
-            </ul>
-          )}
-        </div>
+        {(product.brand || showDivision) && (
+          <p className="product-card-brand">{[showDivision ? product.divisionLabel : null, product.brand].filter(Boolean).join(" · ")}</p>
+        )}
+        <h3><Link href={product.href}>{product.name}</Link></h3>
+        {product.facts.length > 0 && (
+          <ul className="fact-chips" aria-label="Caractéristiques clés">
+            {product.facts.map((fact) => <li key={fact}>{fact}</li>)}
+          </ul>
+        )}
         <div className="product-card-foot">
-          {from !== undefined ? (
-            <p className="price">
-              <span className="price-from">À partir de</span> {formatPrice(from)}
-            </p>
+          {quote ? (
+            <p className="price price-quote">Prix sur devis</p>
           ) : (
-            <p className="price price-quote">Sur devis</p>
+            <p className="price">
+              {formatPrice(product.price!)}
+              <span className="price-hint">{product.tierHint}</span>
+            </p>
           )}
-          <Link href={href} className="add-round" aria-label={`Voir ${product.name}`}>
-            <ArrowRight size={18} weight="bold" aria-hidden />
-          </Link>
+          <p className={`card-status ${product.inStock ? "" : "is-order"}`}>{product.inStock ? "En stock" : "Sur commande"}</p>
         </div>
       </div>
     </article>

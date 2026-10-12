@@ -1,15 +1,14 @@
 import type { Category, Product } from "./types";
 
 // Photos du site (Market : visuels générés ; Energy : photos fournisseur et dérivés validés).
+// Les clichés Energy qui portent une pastille « Continental Energy » incrustée sont écartés tant qu’on n’a pas l’original sans pastille.
 import marketSmartphones from "../../../public/images/landing/market-smartphones.png";
 import marketComputers from "../../../public/images/landing/market-computers.png";
 import marketDining from "../../../public/images/landing/market-dining.png";
 import energySunluxRange from "../../../public/images/landing/energy-sunlux-range.png";
 import energyAuroraInstallation from "../../../public/images/landing/energy-aurora-installation.png";
 import auroraVisuel from "../../../public/images/products/energy/aurora-yf-lfp-16kwh-visuel.jpg";
-import auroraTrio from "../../../public/images/products/energy/modules-aurora-trio.jpg";
 import sunluxStock from "../../../public/images/products/energy/stock-palettes-sunlux.jpg";
-import installationOnduleur from "../../../public/images/products/energy/installation-onduleur-mural.jpg";
 
 /**
  * Données d'exemple. Les noms, prix et coloris des produits Market sont fictifs ;
@@ -166,7 +165,7 @@ export const products: Product[] = [
     summary: "Module de stockage lithium de 16 kWh, en version sur pied.",
     description:
       "Module de stockage lithium de 16 kWh (51,2 V, 314 Ah), en version sur pied. L’installation et la configuration sont établies sur devis, selon votre site.",
-    images: [auroraVisuel, auroraTrio],
+    images: [auroraVisuel],
     attributes: {
       reference: "YF-LFP-16KWH",
       type_appareil: "Batterie lithium",
@@ -207,7 +206,7 @@ export const products: Product[] = [
     summary: "Onduleur hybride, à associer à un stockage lithium.",
     description:
       "Onduleur hybride en montage mural, présenté ici avec son stockage lithium. Les caractéristiques électriques détaillées sont données sur devis.",
-    images: [energyAuroraInstallation, installationOnduleur],
+    images: [energyAuroraInstallation],
     attributes: {
       reference: "AURORA-HYB",
       type_appareil: "Onduleur hybride",

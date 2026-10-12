@@ -17,7 +17,7 @@ type Props = {
 };
 
 /**
- * Achat d'un produit général : coloris, quantité et palier de prix.
+ * Achat d'un produit général : prix, coloris, quantité, palier. Un palier de prix se choisit d'un geste.
  * La commande passe par WhatsApp : le message contient la fiche produit, dont l'aperçu montre l'image.
  */
 export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel, variants, available }: Props) {
@@ -29,7 +29,9 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
   const unit = tierFor(quantity, tiers, basePrice);
   const total = unit * quantity;
   const sorted = [...tiers].sort((a, b) => a.minQty - b.minQty);
-  const activeTier = [{ minQty: 1, label: "À l’unité", unitPrice: basePrice }, ...sorted].filter((t) => quantity >= t.minQty).pop();
+  const rows = [{ minQty: 1, label: "À l’unité", unitPrice: basePrice }, ...sorted];
+  const activeTier = rows.filter((t) => quantity >= t.minQty).pop();
+  const nextTier = sorted.find((t) => quantity < t.minQty);
 
   const message = [
     `Bonjour, je souhaite commander : ${name}`,
@@ -44,6 +46,13 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
 
   return (
     <>
+      <div className="price-block">
+        <p className="price-now">{formatPrice(unit)} <span>par unité</span></p>
+        <p className={`availability ${available ? "is-in" : "is-order"}`}>
+          {available ? "En stock" : "Disponible sur commande"}
+        </p>
+      </div>
+
       {variants && variants.length > 0 && (
         <div className="option-group">
           <p className="option-label">{variantLabel ?? "Coloris"} : <strong>{variant?.label}</strong></p>
@@ -66,22 +75,6 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
         </div>
       )}
 
-      <div className="price-block">
-        <p className="price-now">{formatPrice(unit)} <span>par unité</span></p>
-        {sorted.length > 0 && (
-          <ul className="tiers" aria-label="Prix selon la quantité">
-            <li aria-current={activeTier?.minQty === 1 ? "true" : undefined}>
-              <span>À l’unité</span><span>{formatPrice(basePrice)}</span>
-            </li>
-            {sorted.map((tier) => (
-              <li aria-current={activeTier?.minQty === tier.minQty ? "true" : undefined} key={tier.minQty}>
-                <span>{tier.label}</span><span>{formatPrice(tier.unitPrice)}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
       <div className="option-group">
         <p className="option-label">Quantité</p>
         <div className="qty-row">
@@ -92,15 +85,31 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
           </div>
           <p className="total">Total estimé <strong>{formatPrice(total)}</strong></p>
         </div>
-      </div>
 
-      <p className={`availability ${available ? "is-in" : "is-order"}`}>
-        {available ? "En stock" : "Disponible sur commande"}
-      </p>
+        {sorted.length > 0 && (
+          <>
+            <ul className="tiers" aria-label="Prix selon la quantité">
+              {rows.map((tier) => (
+                <li key={tier.minQty}>
+                  <button type="button" aria-pressed={activeTier?.minQty === tier.minQty} onClick={() => setQuantity(tier.minQty)}>
+                    <span>{tier.label}</span>
+                    <span>{formatPrice(tier.unitPrice)}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {nextTier && (
+              <p className="tier-nudge">
+                Encore {nextTier.minQty - quantity} {nextTier.minQty - quantity > 1 ? "unités" : "unité"} pour passer à {formatPrice(nextTier.unitPrice)} l’unité.
+              </p>
+            )}
+          </>
+        )}
+      </div>
 
       <div className="panel-cta">
         <a className="button button-sun" href={orderHref} target="_blank" rel="noreferrer">
-          Commander sur WhatsApp <WhatsappLogo size={19} weight="fill" aria-hidden />
+          Commander sur WhatsApp <WhatsappLogo size={20} weight="fill" aria-hidden />
         </a>
         <p className="fine-print">Le paiement et la livraison se confirment avec notre équipe.</p>
       </div>
@@ -108,7 +117,7 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
       <div className="sticky-cta" aria-label="Commander">
         <p className="sticky-total"><span>Total estimé</span><strong>{formatPrice(total)}</strong></p>
         <a className="button button-sun" href={orderHref} target="_blank" rel="noreferrer">
-          Commander <WhatsappLogo size={19} weight="fill" aria-hidden />
+          Commander <WhatsappLogo size={20} weight="fill" aria-hidden />
         </a>
       </div>
     </>

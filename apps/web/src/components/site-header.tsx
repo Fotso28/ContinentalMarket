@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type CSSProperties, useEffect, useState } from "react";
 import groupLogo from "../../public/images/landing/logo-group-transparent-cropped.png";
+import { MobileMenu, type MenuCategories } from "./mobile-menu";
 
-/** Navigation unique du site : les deux boutiques d'abord, puis les divisions vitrine et le groupe. */
+/** Navigation de bureau : les deux boutiques d'abord, puis les divisions vitrine et le groupe. Sur mobile, le menu coulissant la remplace. */
 const navigation = [
   { href: "/market", label: "Market" },
   { href: "/energy", label: "Energy" },
@@ -14,59 +14,20 @@ const navigation = [
   { href: "/#groupe", label: "Le groupe" },
 ];
 
-export function SiteHeader({ whatsappUrl }: { whatsappUrl: string }) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.classList.toggle("menu-open", open);
-    if (!open) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      window.removeEventListener("keydown", closeOnEscape);
-      document.body.classList.remove("menu-open");
-    };
-  }, [open]);
-
+export function SiteHeader({ whatsappUrl, categories }: { whatsappUrl: string; categories: MenuCategories }) {
   return (
-    <header className={`site-header ${open ? "menu-is-open" : ""}`}>
+    <header className="site-header">
       <Link className="site-logo" href="/" aria-label="Accueil Continental Group">
         <Image src={groupLogo} alt="" loading="eager" sizes="194px" />
       </Link>
-      <button
-        className="menu-button"
-        type="button"
-        aria-expanded={open}
-        aria-controls="main-navigation"
-        onClick={() => setOpen((value) => !value)}
-      >
-        {open ? "Fermer" : "Menu"}
-      </button>
-      <nav className={`main-navigation ${open ? "is-open" : ""}`} id="main-navigation" aria-label="Navigation principale">
-        {/* Accueil n'apparaît que dans le menu mobile : sur bureau, le logo tient ce rôle. */}
-        <Link href="/" className="nav-home" onClick={() => setOpen(false)} style={{ "--i": 0 } as CSSProperties}>
-          Accueil
-        </Link>
-        {navigation.map((item, index) => (
-          <Link
-            href={item.href}
-            key={item.href}
-            style={{ "--i": index + 1 } as CSSProperties}
-            onClick={() => setOpen(false)}
-          >
+      <MobileMenu categories={categories} whatsappUrl={whatsappUrl} variant="pill" />
+      <nav className="main-navigation" id="main-navigation" aria-label="Navigation principale">
+        {navigation.map((item) => (
+          <Link href={item.href} key={item.href}>
             {item.label}
           </Link>
         ))}
-        <a
-          className="button button-sun nav-contact"
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          style={{ "--i": navigation.length + 1 } as CSSProperties}
-        >
+        <a className="button button-sun nav-contact" href={whatsappUrl} target="_blank" rel="noreferrer">
           Nous écrire
         </a>
       </nav>
