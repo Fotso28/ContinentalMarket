@@ -25,7 +25,7 @@ const frauncesItalic = Fraunces({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://continental-group.cm"),
+  metadataBase: new URL("https://continentalmarket237.com"),
   title: "Continental Group — Plusieurs expertises, une même exigence",
   description:
     "Depuis Douala, Continental Group rassemble Market, Energy, Software et Pressing au service de l’Afrique centrale.",
