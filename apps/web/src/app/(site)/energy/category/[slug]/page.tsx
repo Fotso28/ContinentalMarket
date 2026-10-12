@@ -1,47 +1,45 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteFrame } from "@/components/site-frame";
 import { Breadcrumbs } from "@/components/commerce/breadcrumbs";
 import { CategoryChips } from "@/components/commerce/category-chips";
 import { ProductCard } from "@/components/commerce/product-card";
-import { TabBar } from "@/components/commerce/tab-bar";
 import { getCategories, getCategory, getProducts } from "@/lib/catalog/queries";
 import { buildMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return getCategories("market").map((category) => ({ slug: category.slug }));
+  return getCategories("energy").map((category) => ({ slug: category.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const category = getCategory("market", slug);
-  if (!category) return { title: "Continental Market" };
+  const category = getCategory("energy", slug);
+  if (!category) return { title: "Continental Energy" };
   return buildMetadata({
-    title: `${category.name} — Continental Market`,
+    title: `${category.name} — Continental Energy`,
     description: category.intro,
-    path: `/market/category/${category.slug}`,
+    path: `/energy/category/${category.slug}`,
     image: category.image,
   });
 }
 
-export default async function MarketCategoryPage({ params }: Props) {
+export default async function EnergyCategoryPage({ params }: Props) {
   const { slug } = await params;
-  const category = getCategory("market", slug);
+  const category = getCategory("energy", slug);
   if (!category) notFound();
 
-  const items = getProducts("market", slug);
+  const items = getProducts("energy", slug);
 
   return (
-    <SiteFrame message={`Bonjour Continental Market, j’ai une question sur la catégorie ${category.name}.`} withTabBar>
+    <>
       <section className="catalog-intro">
-        <Breadcrumbs items={[{ href: "/market", label: "Market" }, { label: category.name }]} />
+        <Breadcrumbs items={[{ href: "/energy", label: "Energy" }, { label: category.name }]} />
         <h1>{category.name}</h1>
         <p>{category.intro}</p>
       </section>
 
-      <CategoryChips division="market" categories={getCategories("market")} activeSlug={slug} />
+      <CategoryChips division="energy" categories={getCategories("energy")} activeSlug={slug} />
 
       <section className="section-block" aria-label={`Produits : ${category.name}`}>
         {items.length > 0 ? (
@@ -55,7 +53,6 @@ export default async function MarketCategoryPage({ params }: Props) {
         )}
       </section>
 
-      <TabBar active="market" />
-    </SiteFrame>
+    </>
   );
 }

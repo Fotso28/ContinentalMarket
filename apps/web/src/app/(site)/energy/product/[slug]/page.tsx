@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteFrame } from "@/components/site-frame";
 import { Breadcrumbs } from "@/components/commerce/breadcrumbs";
 import { ProductCard } from "@/components/commerce/product-card";
 import { ProductGallery } from "@/components/commerce/product-gallery";
@@ -34,7 +33,7 @@ export default async function EnergyProductPage({ params }: Props) {
   const url = productUrl("energy", product.slug);
 
   return (
-    <SiteFrame message={`Bonjour, je souhaite un devis pour : ${product.name}\n${url}`}>
+    <>
       <div className="product-page energy-page">
         <Breadcrumbs
           items={[
@@ -80,6 +79,6 @@ export default async function EnergyProductPage({ params }: Props) {
           </section>
         )}
       </div>
-    </SiteFrame>
+    </>
   );
 }

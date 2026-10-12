@@ -2,15 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
-import { SiteFrame } from "@/components/site-frame";
 import { CategoryChips } from "@/components/commerce/category-chips";
 import { ProductCard } from "@/components/commerce/product-card";
-import { TabBar } from "@/components/commerce/tab-bar";
 import { getCategories, getProducts } from "@/lib/catalog/queries";
 import { whatsappLink } from "@/lib/contact";
 import { buildMetadata } from "@/lib/seo";
-import auroraTrio from "../../../public/images/products/energy/modules-aurora-trio.jpg";
-import installationModule from "../../../public/images/products/energy/installation-module-mural.jpg";
+import auroraTrio from "../../../../public/images/products/energy/modules-aurora-trio.jpg";
+import installationModule from "../../../../public/images/products/energy/installation-module-mural.jpg";
 
 export const metadata: Metadata = buildMetadata({
   title: "Continental Energy — stockage et onduleurs",
@@ -24,7 +22,7 @@ export default function EnergyPage() {
   const featured = getProducts("energy");
 
   return (
-    <SiteFrame message="Bonjour Continental Energy, je souhaite un devis." withTabBar>
+    <>
       <section className="catalog-intro energy-intro">
         <div className="energy-intro-copy">
           <h1>L’énergie pensée comme une infrastructure.</h1>
@@ -81,7 +79,6 @@ export default function EnergyPage() {
         </div>
       </section>
 
-      <TabBar active="energy" />
-    </SiteFrame>
+    </>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteFrame } from "@/components/site-frame";
 import { Breadcrumbs } from "@/components/commerce/breadcrumbs";
 import { ProductCard } from "@/components/commerce/product-card";
 import { ProductGallery } from "@/components/commerce/product-gallery";
@@ -33,7 +32,7 @@ export default async function MarketProductPage({ params }: Props) {
   const url = productUrl("market", product.slug);
 
   return (
-    <SiteFrame message={`Bonjour, j’ai une question sur : ${product.name}\n${url}`}>
+    <>
       <div className="product-page">
         <Breadcrumbs
           items={[
@@ -87,6 +86,6 @@ export default async function MarketProductPage({ params }: Props) {
           </section>
         )}
       </div>
-    </SiteFrame>
+    </>
   );
 }

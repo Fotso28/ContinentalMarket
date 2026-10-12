@@ -5,13 +5,13 @@ import Link from "next/link";
 import { type CSSProperties, useEffect, useState } from "react";
 import groupLogo from "../../public/images/landing/logo-group-transparent-cropped.png";
 
+/** Navigation unique du site : les deux boutiques d'abord, puis les divisions vitrine et le groupe. */
 const navigation = [
-  { href: "/#groupe", label: "Le Groupe" },
-  { href: "/#metiers", label: "Nos métiers" },
   { href: "/market", label: "Market" },
   { href: "/energy", label: "Energy" },
   { href: "/software", label: "Software" },
   { href: "/pressing", label: "Pressing" },
+  { href: "/#groupe", label: "Le groupe" },
 ];
 
 export function SiteHeader({ whatsappUrl }: { whatsappUrl: string }) {
@@ -46,11 +46,15 @@ export function SiteHeader({ whatsappUrl }: { whatsappUrl: string }) {
         {open ? "Fermer" : "Menu"}
       </button>
       <nav className={`main-navigation ${open ? "is-open" : ""}`} id="main-navigation" aria-label="Navigation principale">
+        {/* Accueil n'apparaît que dans le menu mobile : sur bureau, le logo tient ce rôle. */}
+        <Link href="/" className="nav-home" onClick={() => setOpen(false)} style={{ "--i": 0 } as CSSProperties}>
+          Accueil
+        </Link>
         {navigation.map((item, index) => (
           <Link
             href={item.href}
             key={item.href}
-            style={{ "--i": index } as CSSProperties}
+            style={{ "--i": index + 1 } as CSSProperties}
             onClick={() => setOpen(false)}
           >
             {item.label}
@@ -61,7 +65,7 @@ export function SiteHeader({ whatsappUrl }: { whatsappUrl: string }) {
           href={whatsappUrl}
           target="_blank"
           rel="noreferrer"
-          style={{ "--i": navigation.length } as CSSProperties}
+          style={{ "--i": navigation.length + 1 } as CSSProperties}
         >
           Nous écrire
         </a>

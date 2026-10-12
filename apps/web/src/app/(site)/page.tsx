@@ -5,29 +5,25 @@ import {
   ArrowRight,
   CoatHanger,
   Lightning,
-  MapPin,
   Monitor,
-  Phone,
   ShoppingCart,
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { SiteHeader } from "@/components/site-header";
 import { HeroCollage } from "@/components/hero-collage";
 import { SoftwareDemo } from "@/components/software-demo";
 
-import groupOffice from "../../public/images/landing/persona-group-office.png";
-import marketManager from "../../public/images/landing/market-manager.png";
-import softwareDesk from "../../public/images/landing/persona-software-desk.png";
-import pressingSpecialist from "../../public/images/landing/pressing-specialist.png";
-import groupLogo from "../../public/images/landing/logo-group-transparent-cropped.png";
-import energyAuroraInstallation from "../../public/images/landing/energy-aurora-installation.png";
-import energySunluxRange from "../../public/images/landing/energy-sunlux-range.png";
-import pressingWashCare from "../../public/images/landing/pressing-wash-care.png";
-import pressingIroning from "../../public/images/landing/persona-pressing-ironing.png";
-import pressingFinishedStyle from "../../public/images/landing/persona-pressing-style.png";
-import marketSmartphones from "../../public/images/landing/market-smartphones.png";
-import marketComputers from "../../public/images/landing/market-computers.png";
-import marketDining from "../../public/images/landing/market-dining.png";
+import groupOffice from "../../../public/images/landing/persona-group-office.png";
+import marketManager from "../../../public/images/landing/market-manager.png";
+import softwareDesk from "../../../public/images/landing/persona-software-desk.png";
+import pressingSpecialist from "../../../public/images/landing/pressing-specialist.png";
+import energyAuroraInstallation from "../../../public/images/landing/energy-aurora-installation.png";
+import energySunluxRange from "../../../public/images/landing/energy-sunlux-range.png";
+import pressingWashCare from "../../../public/images/landing/pressing-wash-care.png";
+import pressingIroning from "../../../public/images/landing/persona-pressing-ironing.png";
+import pressingFinishedStyle from "../../../public/images/landing/persona-pressing-style.png";
+import marketSmartphones from "../../../public/images/landing/market-smartphones.png";
+import marketComputers from "../../../public/images/landing/market-computers.png";
+import marketDining from "../../../public/images/landing/market-dining.png";
 
 const whatsappUrl =
   "https://wa.me/237698579865?text=Bonjour%20Continental%20Group%2C%20je%20souhaite%20%C3%A9changer%20avec%20votre%20%C3%A9quipe.";
@@ -123,19 +119,7 @@ const commitments = [
 
 export default function Home() {
   return (
-    <div className="page-shell">
-      <a className="skip-link" href="#contenu">Aller au contenu</a>
-
-      <div className="utility-bar">
-        <span><MapPin size={16} weight="regular" aria-hidden /> Douala, Logpom, derrière Papirus</span>
-        <a href={whatsappUrl} target="_blank" rel="noreferrer">
-          <WhatsappLogo size={16} weight="fill" aria-hidden /> WhatsApp&nbsp;: +237 698 57 98 65
-        </a>
-      </div>
-
-      <SiteHeader whatsappUrl={whatsappUrl} />
-
-      <main id="contenu">
+    <>
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
             <h1 id="hero-title">Bâtir, servir et faire avancer le quotidien.</h1>
@@ -349,24 +333,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-      </main>
-
-      <footer className="site-footer">
-        <div className="footer-brand">
-          <Image src={groupLogo} alt="Continental Group" sizes="200px" />
-          <p>Un groupe. Quatre expertises. Une même exigence.</p>
-        </div>
-        <address className="footer-contact">
-          <p><MapPin size={18} weight="regular" aria-hidden /> Douala, Logpom, derrière Papirus</p>
-          <a href="tel:+237671275495" aria-label="Appeler le +237 671 27 54 95">
-            <Phone size={18} weight="regular" aria-hidden /> +237 671 27 54 95
-          </a>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Écrire sur WhatsApp au +237 698 57 98 65">
-            <WhatsappLogo size={18} weight="regular" aria-hidden /> +237 698 57 98 65
-          </a>
-        </address>
-        <small>© 2026 Continental Group</small>
-      </footer>
-    </div>
+    </>
   );
 }
