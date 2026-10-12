@@ -5,6 +5,8 @@ import { useState } from "react";
 import { formatPrice, tierFor } from "@/lib/catalog/format";
 import type { PriceTier, Variant } from "@/lib/catalog/types";
 import { whatsappLink } from "@/lib/contact";
+import { DemoNotice } from "@/components/commerce/demo-notice";
+import { OrderButton } from "@/components/commerce/order-button";
 
 type Props = {
   name: string;
@@ -107,18 +109,20 @@ export function PurchasePanel({ name, productUrl, basePrice, tiers, variantLabel
         )}
       </div>
 
+      <DemoNotice id="order-note" action="La commande" />
+
       <div className="panel-cta">
-        <a className="button button-sun" href={orderHref} target="_blank" rel="noreferrer">
+        <OrderButton href={orderHref} disabledLabel="Commande bientôt disponible" describedBy="order-note">
           Commander sur WhatsApp <WhatsappLogo size={20} weight="fill" aria-hidden />
-        </a>
+        </OrderButton>
         <p className="fine-print">Le paiement et la livraison se confirment avec notre équipe.</p>
       </div>
 
       <div className="sticky-cta" aria-label="Commander">
         <p className="sticky-total"><span>Total estimé</span><strong>{formatPrice(total)}</strong></p>
-        <a className="button button-sun" href={orderHref} target="_blank" rel="noreferrer">
+        <OrderButton href={orderHref} disabledLabel="Bientôt disponible" describedBy="order-note">
           Commander <WhatsappLogo size={20} weight="fill" aria-hidden />
-        </a>
+        </OrderButton>
       </div>
     </>
   );

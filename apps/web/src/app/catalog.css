@@ -163,6 +163,13 @@
 .panel-cta .button { width: 100%; min-height: 56px; font-size: 1rem; }
 .fine-print { margin: 0; color: var(--ink-soft); font-size: .875rem; text-align: center; }
 
+/* Commande indisponible tant que le catalogue est fictif : bouton grisé, note visible sur tous les écrans. */
+button.button { border: 0; font-family: inherit; cursor: pointer; }
+.shop-shell .button-sun:disabled { background: var(--line); color: var(--ink-soft); box-shadow: none; cursor: not-allowed; }
+.shop-shell .button-sun:disabled svg { color: var(--ink-soft); translate: none; }
+.demo-notice { margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper); color: var(--ink-soft); font-size: .9375rem; line-height: 1.5; }
+.demo-notice a { display: inline-flex; align-items: center; min-height: 44px; color: var(--forest); font-weight: 650; text-decoration: underline; text-underline-offset: 4px; }
+
 .facts-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .facts-grid div { padding: 12px 14px; display: grid; gap: 2px; border-radius: var(--r-md); background: var(--ivory); }
 .facts-grid dt { color: var(--ink-soft); font-size: .8125rem; font-weight: 650; }
