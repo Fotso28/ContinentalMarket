@@ -186,3 +186,7 @@
 .share-label { margin-right: 4px; color: var(--ink-soft); font-size: .9375rem; }
 .share a { min-height: 44px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--forest); font-size: .9375rem; font-weight: 650; transition: border-color 200ms var(--ease-soft); }
 @media (hover: hover) { .share a:hover { border-color: var(--forest); } }
+
+/* Page 404 dans le cadre du site. */
+.not-found-code { margin: 0; color: var(--ink-soft); font-size: .875rem; font-weight: 700; }
+.not-found-links { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 8px; }

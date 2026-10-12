@@ -1,0 +1,108 @@
+.division-page { --division-gutter: var(--gutter); }
+.division-page main { min-width: 0; }
+.division-page .division-hero { min-height: min(740px, calc(100svh - 114px)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.division-hero-copy { padding: clamp(48px, 6vw, 96px) var(--division-gutter); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-width: 0; }
+.division-brand { height: 86px; width: 178px; overflow: clip; flex: none; }
+.division-brand img { display: block; width: 100%; height: auto; translate: 0 -42px; }
+.division-hero h1, .division-intro h2, .division-section-heading h2, .pressing-place h2, .division-contact h2 { margin: 0; font-family: var(--font-display), Georgia, serif; font-weight: 500; font-variation-settings: "SOFT" 50; letter-spacing: -.032em; line-height: 1.02; }
+.division-hero h1 { max-width: 11ch; margin-top: 22px; font-size: clamp(3.25rem, 5.5vw, 5.7rem); }
+.division-hero-copy > p { max-width: 34rem; margin: 28px 0 0; font-size: clamp(1.05rem, 1.35vw, 1.2rem); line-height: 1.68; }
+.division-actions { margin-top: 35px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; }
+.division-secondary-link, .pressing-text-link, .division-back a, .division-footer-link { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font-size: .94rem; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.division-secondary-link svg, .pressing-text-link svg, .division-back svg, .division-footer-link svg { transition: translate 250ms var(--ease-out); }
+.division-secondary-link:hover svg, .pressing-text-link:hover svg, .division-back a:hover svg, .division-footer-link:hover svg { translate: 4px 0; }
+.division-hero-photo { min-height: 600px; margin: 0; position: relative; overflow: clip; }
+.division-hero-photo img { object-fit: cover; }
+.division-intro { padding: clamp(76px, 10vw, 150px) var(--division-gutter); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .7fr); align-items: end; gap: clamp(36px, 7vw, 120px); }
+.division-intro h2 { max-width: 13ch; font-size: clamp(3rem, 5.4vw, 5rem); }
+.division-intro p { max-width: 34rem; margin: 0 0 .3em; color: var(--ink-soft); font-size: clamp(1.08rem, 1.45vw, 1.25rem); line-height: 1.7; }
+.division-section-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .65fr); align-items: end; gap: clamp(30px, 6vw, 90px); }
+.division-section-heading h2 { max-width: 14ch; font-size: clamp(3rem, 5vw, 4.9rem); }
+.division-section-heading p { max-width: 33rem; margin: 0 0 .3em; line-height: 1.7; }
+.division-contact { padding: clamp(70px, 8vw, 118px) var(--division-gutter); display: flex; align-items: end; justify-content: space-between; gap: 40px; }
+.division-contact h2 { max-width: 13ch; font-size: clamp(3rem, 5vw, 4.75rem); }
+.division-contact p { max-width: 36rem; margin: 22px 0 0; font-size: 1.1rem; line-height: 1.65; }
+.division-contact .button { flex: none; }
+.division-back { padding: 22px var(--division-gutter); background: var(--paper); border-top: 1px solid var(--line); }
+.division-footer-link { margin-top: 24px; color: var(--paper); }
+
+/* Software: le portrait ouvre sur un aperçu concret de l'interface. */
+.software-hero { background: var(--forest-deep); color: var(--paper); }
+.software-hero .division-brand { background: #fff; border-radius: 6px; }
+.software-hero h1 { color: var(--paper); }
+.software-hero .division-hero-copy > p { color: var(--mist); }
+.software-hero .division-hero-photo img { object-position: center 38%; }
+.software-intro { background: var(--paper); }
+.software-intro h2 { color: var(--forest); }
+.software-example { padding: clamp(75px, 8vw, 120px) var(--division-gutter); background: var(--ivory); }
+.software-example .division-section-heading { margin-bottom: clamp(42px, 5vw, 72px); }
+.software-example h2 { color: var(--forest); }
+.software-example-stage { max-width: 1040px; margin-inline: auto; }
+.software-example-stage .software-screen { min-height: 500px; }
+.software-contact { background: var(--forest); color: var(--paper); }
+.software-contact h2 { color: var(--paper); }
+.software-contact p { color: var(--mist); }
+
+/* Pressing: la photographie du comptoir est la preuve centrale. */
+.pressing-hero { background: #f5f2ec; }
+.pressing-hero h1, .pressing-intro h2, .pressing-place h2 { color: #173e77; }
+.pressing-hero .division-brand { width: 185px; height: 66px; background: white; border-radius: 6px; }
+.pressing-hero .division-brand img { translate: 0 -43px; }
+.pressing-hero .division-hero-copy > p { color: #435368; }
+.pressing-hero .division-hero-photo img { object-position: 48% 50%; }
+.pressing-hero .division-hero-photo figcaption { position: absolute; bottom: 22px; left: 22px; padding: 9px 14px; border-radius: 6px; background: rgb(255 255 255 / .96); color: #173e77; font-size: .85rem; font-weight: 700; }
+.pressing-button { background: #173e77; color: white; }
+.pressing-button:hover { background: #0f2d59; }
+.pressing-hero .division-secondary-link, .pressing-text-link { color: #173e77; }
+.pressing-intro { background: #fffdf9; }
+.pressing-place { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); background: #e9eef4; }
+.pressing-place-photo { min-height: 620px; position: relative; overflow: clip; }
+.pressing-place-photo img { object-fit: cover; object-position: center; }
+.pressing-place-copy { padding: clamp(60px, 8vw, 118px) var(--division-gutter) clamp(60px, 8vw, 118px) clamp(40px, 5vw, 80px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.pressing-place h2 { max-width: 12ch; font-size: clamp(3rem, 4.5vw, 4.5rem); }
+.pressing-place p { max-width: 30rem; margin: 26px 0; color: #435368; font-size: 1.125rem; line-height: 1.7; }
+.pressing-contact { background: #173e77; color: white; }
+.pressing-contact h2 { color: white; }
+.pressing-contact p { display: flex; align-items: center; gap: 10px; color: #dce5f1; }
+.pressing-contact .pressing-button { background: white; color: #173e77; }
+.pressing-contact .pressing-button:hover { background: #e9eef4; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .division-hero-copy h1 { animation: division-enter 800ms var(--ease-out) both; }
+  .division-hero-copy > p { animation: division-enter 800ms 90ms var(--ease-out) both; }
+  .division-hero-photo img { animation: division-photo 1100ms var(--ease-out) both; }
+}
+@keyframes division-enter { from { opacity: 0; translate: 0 18px; } }
+@keyframes division-photo { from { scale: 1.06; } }
+
+@media (max-width: 1050px) {
+  .division-page .division-hero { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); }
+  .division-hero h1 { font-size: clamp(3rem, 5.8vw, 4.5rem); }
+  .division-actions { align-items: flex-start; flex-direction: column; }
+  .division-contact { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 767px) {
+  .division-page .division-hero { min-height: 0; display: flex; flex-direction: column; }
+  .division-hero-copy { padding: 42px var(--division-gutter) 48px; }
+  .division-hero h1 { max-width: 13ch; margin-top: 12px; font-size: clamp(3rem, 12.2vw, 4.5rem); }
+  .division-hero-copy > p { margin-top: 22px; font-size: 1.05rem; }
+  .division-actions { width: 100%; margin-top: 28px; gap: 16px; }
+  .division-actions .button { width: 100%; }
+  .division-hero-photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .software-hero .division-hero-photo { aspect-ratio: 5 / 4; }
+  .software-hero .division-hero-photo img { object-position: center 30%; }
+  .division-intro, .division-section-heading { display: block; }
+  .division-intro { padding-block: 76px; }
+  .division-intro h2, .division-section-heading h2 { font-size: clamp(2.85rem, 11vw, 4rem); }
+  .division-intro p, .division-section-heading p { margin-top: 24px; }
+  .software-example { padding-block: 76px; }
+  .software-example .division-section-heading { margin-bottom: 36px; }
+  .software-example-stage .software-screen { min-height: 450px; }
+  .pressing-place { display: flex; flex-direction: column; }
+  .pressing-place-photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .pressing-place-copy { padding: 64px var(--division-gutter) 72px; }
+  .pressing-place h2, .division-contact h2 { font-size: clamp(2.85rem, 11vw, 4rem); }
+  .division-contact { padding-block: 74px; gap: 30px; }
+  .division-contact .button { width: 100%; }
+  .division-back { padding-block: 16px; }
+}
