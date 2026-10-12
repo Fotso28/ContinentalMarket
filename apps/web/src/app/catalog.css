@@ -109,6 +109,13 @@
 .panel-cta { display: grid; gap: 10px; padding-top: 6px; }
 .panel-cta .button { width: 100%; }
 .fine-print { margin: 0; color: var(--ink-soft); font-size: .8125rem; text-align: center; }
+
+/* Commande indisponible tant que le catalogue est fictif : bouton grisé, note visible sur tous les écrans. */
+button.button { border: 0; font-family: inherit; cursor: pointer; }
+.button-sun:disabled { background: var(--line); color: var(--ink-soft); box-shadow: none; cursor: not-allowed; }
+.button-sun:disabled svg { color: var(--ink-soft); translate: none; }
+.demo-notice { margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink-soft); font-size: .9375rem; line-height: 1.5; }
+.demo-notice a { display: inline-flex; align-items: center; min-height: 44px; color: var(--forest); font-weight: 650; text-decoration: underline; text-underline-offset: 4px; }
 .quote-note { margin: 0; color: var(--ink-soft); font-size: 1rem; line-height: 1.6; }
 
 .facts { margin: 0; display: grid; border-top: 1px solid var(--line); }

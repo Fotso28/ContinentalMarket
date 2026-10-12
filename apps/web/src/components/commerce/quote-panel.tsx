@@ -1,5 +1,7 @@
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { whatsappLink } from "@/lib/contact";
+import { DemoNotice } from "@/components/commerce/demo-notice";
+import { OrderButton } from "@/components/commerce/order-button";
 
 /**
  * Produit énergétique : pas de panier ni de prix affiché, la demande part vers un devis.
@@ -38,18 +40,20 @@ export function QuotePanel({
         </dl>
       )}
 
+      <DemoNotice id="quote-note" action="La demande de devis" />
+
       <div className="panel-cta">
-        <a className="button button-sun" href={href} target="_blank" rel="noreferrer">
+        <OrderButton href={href} disabledLabel="Devis bientôt disponible" describedBy="quote-note">
           Demander un devis <WhatsappLogo size={19} weight="fill" aria-hidden />
-        </a>
+        </OrderButton>
         <p className="fine-print">Une demande par WhatsApp, traitée par notre équipe Energy.</p>
       </div>
 
       <div className="sticky-cta" aria-label="Demander un devis">
         <p className="sticky-total"><span>Prix</span><strong>Sur devis</strong></p>
-        <a className="button button-sun" href={href} target="_blank" rel="noreferrer">
+        <OrderButton href={href} disabledLabel="Bientôt disponible" describedBy="quote-note">
           Demander un devis <WhatsappLogo size={19} weight="fill" aria-hidden />
-        </a>
+        </OrderButton>
       </div>
     </>
   );
